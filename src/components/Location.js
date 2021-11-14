@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Grid, Typography, IconButton } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons'
@@ -7,7 +7,6 @@ import TempContext from './TempContext'
 
 export default function Location({ name, tempC, tempF, condition, isFavorite, onFavoriteClick, onDeleteClick }) {
 
-    const [liked, setLiked] = useState()
     const {temp} = useContext(TempContext)
 
     const onClick = () => {

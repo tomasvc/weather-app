@@ -44,10 +44,10 @@ export default function Locations() {
     useEffect(() => {
 
         axios.all([
-            axios('http://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=London'),
-            axios('http://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=Paris'),
-            axios('http://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=New York'),
-            axios('http://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=Tokyo')
+            axios('https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=London'),
+            axios('https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=Paris'),
+            axios('https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=New York'),
+            axios('https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=Tokyo')
         ])
         .then(response => {
             let array = []

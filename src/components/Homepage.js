@@ -43,7 +43,7 @@ export default function Homepage() {
         let currentTime = today.getHours()
 
         coords && (
-        axios(`http://api.weatherapi.com/v1/forecast.json?key=b052758d6ca34a0ea45160442211011&q=${coords.lat},${coords.lon}&days=7&aqi=no`)
+        axios(`https://api.weatherapi.com/v1/forecast.json?key=b052758d6ca34a0ea45160442211011&q=${coords.lat},${coords.lon}&days=7&aqi=no`)
             .then(res => {
                 setCurrentLocation({
                     name: res.data.location.name,

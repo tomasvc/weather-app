@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Grid, TextField, Typography, IconButton, Autocomplete } from '@mui/material'
+import { TextField } from '@mui/material'
 import axios from 'axios'
 
 export default function Search() {
