@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import axios from 'axios'
 import Location from './Location'
+import Search from './Search'
 
 export default function Locations() {
 
@@ -14,14 +15,11 @@ export default function Locations() {
             if (favoriteLocations.length === 0) {
                 item.isFavorite = true
                 setFavoriteLocations([item])
-                console.log(locations.filter(el => el.location.location.name !== item.location.location.name))
                 setLocations([item, ...locations.filter(el => el.location.location.name !== item.location.location.name)])
             } else if (favoriteLocations.length > 0) {
                 item.isFavorite = true
                 setFavoriteLocations([item, ...favoriteLocations])
-                console.log(favoriteLocations) 
                 setLocations([...favoriteLocations, ...locations.filter(el => el.location.location.name !== item.location.location.name)])
-                console.log(locations)
             }
         } else {
             item.isFavorite = false
@@ -53,12 +51,22 @@ export default function Locations() {
             let array = []
             response.map(item => {
                 array = [...array, {location: item.data, isFavorite: false}]
-                console.log(array)
                 return setLocations(array)
             })
         })
 
     }, [])
+
+    const addLocation = (item) => {
+        axios(`https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=${item?.label}`)
+            .then(res => {
+                if (locations.some( el => el.location.location.name === res.data.location.name)) {
+                    alert('This location already exists in your list')
+                } else {
+                    setLocations([{location: res?.data, isFavorite: false}, ...locations])
+                }
+            })
+    }
 
 
     // useEffect(() => {
@@ -68,25 +76,28 @@ export default function Locations() {
 
 
     return (
-        <Grid maxWidth="md" sx={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr 1fr',
-                gridGap: 10,
-                marginBottom: 5,
-                background: '#fafafa'
-            }}>
-            {locations?.map((item) => {
-                return <Location 
-                            key={item.location.location.name} 
-                            name={item.location.location.name} 
-                            tempC={item.location.current.temp_c} 
-                            tempF={item.location.current.temp_f} 
-                            condition={item.location.current.condition.text}
-                            isFavorite={item.isFavorite}
-                            onFavoriteClick={() => onFavoriteClick(item)} 
-                            onDeleteClick={onDeleteClick} 
-                        />
-            })}
-        </Grid>
+        <>
+            <Search onAddLocation={addLocation} />
+            <Grid maxWidth="md" sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr 1fr',
+                    gridGap: 10,
+                    marginBottom: 5,
+                    background: '#fafafa'
+                }}>
+                {locations?.map((item) => {
+                    return <Location 
+                                key={item.location.location.name} 
+                                name={item.location.location.name} 
+                                tempC={item.location.current.temp_c} 
+                                tempF={item.location.current.temp_f} 
+                                condition={item.location.current.condition.text}
+                                isFavorite={item.isFavorite}
+                                onFavoriteClick={() => onFavoriteClick(item)} 
+                                onDeleteClick={onDeleteClick} 
+                            />
+                })}
+            </Grid>
+        </>
     )
 }

@@ -22,10 +22,6 @@ export default function Homepage() {
     }
 
     useEffect(() => {
-        console.log(temp)
-    }, [temp])
-
-    useEffect(() => {
 
         let success = pos => {
             setCoords({'lat': pos.coords.latitude, 'lon': pos.coords.longitude})
@@ -107,7 +103,7 @@ export default function Homepage() {
                 <Box sx={{border: '1px solid lightgrey', borderRadius: 1, background: '#ffffff'}}>
                     <TabContext value={tabValue}>
                         <Box sx={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'stretch'}}>
-                            <TabList onChange={handleTabChange}>
+                            <TabList variant='fullWidth' onChange={handleTabChange}>
                                 <Tab sx={{width: '50%'}} label="Hourly forecast" value='1' />
                                 <Tab sx={{width: '50%'}} label="Daily forecast" value='2' />
                             </TabList>
@@ -132,8 +128,6 @@ export default function Homepage() {
                         </TabPanel>
                     </TabContext>
                 </Box>
-                
-                <Search />
                 <Locations />
             </Container>
         </TempContext.Provider>
