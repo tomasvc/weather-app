@@ -9,7 +9,7 @@ export default function Search({ onAddLocation }) {
 
     useEffect(() => {
         input &&
-            axios(`http://api.weatherapi.com/v1/search.json?key=b052758d6ca34a0ea45160442211011&q=${input}`)
+            axios(`https://api.weatherapi.com/v1/search.json?key=b052758d6ca34a0ea45160442211011&q=${input}`)
                 .then(res => {
                     console.log(res)
                     let list = res.data.map(item => {

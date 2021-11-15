@@ -57,6 +57,7 @@ export default function Locations() {
 
     }, [])
 
+    
     const addLocation = (item) => {
         axios(`https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=${item?.label}`)
             .then(res => {
@@ -67,12 +68,6 @@ export default function Locations() {
                 }
             })
     }
-
-
-    // useEffect(() => {
-    //     console.log(locations)
-    //     console.log(favoriteLocations)
-    // }, [locations, favoriteLocations])
 
 
     return (
