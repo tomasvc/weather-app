@@ -65,7 +65,7 @@ export default function Locations() {
     const addLocation = (item) => {
         axios(`https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=${item?.label}`)
             .then(res => {
-                if (locations.some( el => el.location.location.name === res.data.location.name)) {
+                if (locations?.some( el => el.location.location.name === res.data.location.name)) {
                     alert('This location already exists in your list')
                 } else {
                     setLocations([{location: res?.data, isFavorite: false}, ...locations]) 
