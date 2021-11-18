@@ -15,13 +15,13 @@ export default function Locations() {
     }, [locations, favoriteLocations])
 
     const onFavoriteClick = (item) => {
-        let isItemInFavorites = favoriteLocations.some(el => el.location.location.name === item.location.location.name)
+        let isItemInFavorites = favoriteLocations?.some(el => el.location.location.name === item.location.location.name)
         if (!isItemInFavorites) {
-            if (favoriteLocations.length === 0) {
+            if (favoriteLocations?.length === 0) {
                 item.isFavorite = true
                 setFavoriteLocations([item])
                 setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
-            } else if (favoriteLocations.length > 0) {
+            } else if (favoriteLocations?.length > 0) {
                 item.isFavorite = true
                 setFavoriteLocations([item, ...favoriteLocations])
                 setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
