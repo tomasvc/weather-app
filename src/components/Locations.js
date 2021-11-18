@@ -10,8 +10,14 @@ export default function Locations() {
     const [favoriteLocations, setFavoriteLocations] = useState(JSON.parse(localStorage.getItem('favoriteLocations')))
 
     useEffect(() => {
-        localStorage?.setItem('locations', JSON.stringify(locations))
-        localStorage?.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
+        if (locations?.length === 0) {
+            setLocations([])
+        }
+        if (favoriteLocations?.length === 0) {
+            setFavoriteLocations([])
+        }
+        localStorage.setItem('locations', JSON.stringify(locations))
+        localStorage.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
     }, [locations, favoriteLocations])
 
     const onFavoriteClick = (item) => {
