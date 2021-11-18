@@ -28,7 +28,7 @@ export default function Locations() {
             }
         } else {
             item.isFavorite = false
-            setFavoriteLocations(favoriteLocations.filter(el => el.location.location.name !== item.location.location.name))
+            setFavoriteLocations(favoriteLocations?.filter(el => el.location.location.name !== item.location.location.name))
             setLocations([...locations])
         }
     }
