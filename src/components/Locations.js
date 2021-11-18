@@ -11,10 +11,10 @@ export default function Locations() {
 
     useEffect(() => {
         if (locations?.length === 0) {
-            setLocations([])
+            setLocations(null)
         }
         if (favoriteLocations?.length === 0) {
-            setFavoriteLocations([])
+            setFavoriteLocations(null)
         }
         localStorage.setItem('locations', JSON.stringify(locations))
         localStorage.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
