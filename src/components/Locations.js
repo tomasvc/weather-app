@@ -6,20 +6,19 @@ import Search from './Search'
 
 export default function Locations() {
 
-    const [locations, setLocations] = useState(JSON.parse(localStorage.getItem('locations')))
-    const [favoriteLocations, setFavoriteLocations] = useState(JSON.parse(localStorage.getItem('favoriteLocations')))
+    let _favoriteLocations = localStorage.getItem('favoriteLocations')
+    let _locations = localStorage.getItem('locations')
+
+    const [locations, setLocations] = useState(_locations ? JSON.parse(_locations) : [])
+    const [favoriteLocations, setFavoriteLocations] = useState(_favoriteLocations ? JSON.parse(_favoriteLocations) : [])
+
 
     useEffect(() => {
-        if (locations?.length === 0) {
-            setLocations(null)
-        }
-        if (favoriteLocations?.length === 0) {
-            setFavoriteLocations(null)
-        }
         localStorage.setItem('locations', JSON.stringify(locations))
         localStorage.setItem('favoriteLocations', JSON.stringify(favoriteLocations))
     }, [locations, favoriteLocations])
 
+    
     const onFavoriteClick = (item) => {
         let isItemInFavorites = favoriteLocations?.some(el => el.location.location.name === item.location.location.name)
         if (!isItemInFavorites) {
@@ -35,7 +34,7 @@ export default function Locations() {
         } else {
             item.isFavorite = false
             setFavoriteLocations(favoriteLocations?.filter(el => el.location.location.name !== item.location.location.name))
-            setLocations([...locations])
+            setLocations([item, ...locations])
         }
     }
 
@@ -52,35 +51,25 @@ export default function Locations() {
         axios(`https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=${item?.label}`)
             .then(res => {
                 if (locations?.length > 0 || favoriteLocations?.length > 0) {
-                    if (locations?.some( el => el.location.location.name === res.data.location.name) ||
-                        favoriteLocations?.some( el => el.locations.locations.name === res.data.locations.name )) {
+                    console.log(res.data)
+                    locations.forEach(loc => console.log(loc.location.location.name))
+                    if (locations?.some( el => el.location.location.name === res.data.location.name ) ||
+                        favoriteLocations?.some( el => el.location.location.name === res.data.location.name )) {
                         alert('This location already exists in your list')
                     } else {
                         setLocations([{location: res?.data, isFavorite: false}, ...locations]) 
                     }
                 } else {
                     if (locations?.some( el => el.location.location.name === res.data.location.name ) ||
-                        favoriteLocations?.some( el => el.locations.locations.name === res.data.locations.name )) {
+                        favoriteLocations?.some( el => el.location.location.name === res.data.locations.name )) {
                         alert('This location already exists in your list')
                     } else {
                         setLocations([{location: res?.data, isFavorite: false}]) 
                     }
                 }
-            })     
+            }).catch(error => console.log(error))
+                 
     }
-
-    // const editLocation = (item) => {
-    //     axios(`https://api.weatherapi.com/v1/current.json?key=b052758d6ca34a0ea45160442211011&q=${item?.label}`)
-    //         .then(res => {
-    //             let newList = locations?.filter(loc => loc.location.location.name !== res.data.location.name)
-    //             console.log(newList)
-    //             setLocations(() => ([ 
-    //                 ...newList, 
-    //                 { location: res?.data, isFavorite: false}
-    //             ]))
-    //             console.log(locations)
-    //         })
-    // }
 
 
     return (
@@ -102,7 +91,7 @@ export default function Locations() {
                     condition={item.location.current.condition.text}
                     isFavorite={item.isFavorite}
                     // editLocation={editLocation}
-                    // onFavoriteClick={() => onFavoriteClick(item)} 
+                    onFavoriteClick={() => onFavoriteClick(item)} 
                     onDeleteClick={onDelete} 
                 />
                 })}
