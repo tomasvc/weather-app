@@ -20,22 +20,27 @@ export default function Locations() {
 
     
     const onFavoriteClick = (item) => {
-        let isItemInFavorites = favoriteLocations?.some(el => el.location.location.name === item.location.location.name)
-        if (!isItemInFavorites) {
-            if (favoriteLocations?.length === 0) {
-                item.isFavorite = true
-                setFavoriteLocations([item])
-                setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
-            } else if (favoriteLocations?.length > 0) {
-                item.isFavorite = true
-                setFavoriteLocations([item, ...favoriteLocations])
-                setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
+        try {
+            let isItemInFavorites = favoriteLocations?.some(el => el.location.location.name === item.location.location.name)
+            if (!isItemInFavorites) {
+                if (favoriteLocations?.length === 0) {
+                    item.isFavorite = true
+                    setFavoriteLocations([item])
+                    setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
+                } else if (favoriteLocations?.length > 0) {
+                    item.isFavorite = true
+                    setFavoriteLocations([item, ...favoriteLocations])
+                    setLocations([...locations.filter(el => el.location.location.name !== item.location.location.name)])
+                }
+            } else {
+                item.isFavorite = false
+                setFavoriteLocations(favoriteLocations?.filter(el => el.location.location.name !== item.location.location.name))
+                setLocations([item, ...locations])
             }
-        } else {
-            item.isFavorite = false
-            setFavoriteLocations(favoriteLocations?.filter(el => el.location.location.name !== item.location.location.name))
-            setLocations([item, ...locations])
+        } catch (error) {
+            console.log(error)
         }
+        
     }
 
     const onDelete = (name) => {
